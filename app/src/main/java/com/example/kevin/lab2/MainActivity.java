@@ -91,38 +91,122 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 opcode = 4; //divide
                 opLast = true;
                 break;
-            //need to get rid of excess zeros
+            case R.id.btnEquals: {
+                switch (opcode) {
+                    case 1:
+                        result = num1 + num2;
+                        editTextNumDisplay.setText(Double.toString(result));
+                        opLast = true;
+                        break;
+                    case 2:
+                        result = num1 - num2;
+                        editTextNumDisplay.setText(Double.toString(result));
+                        opLast = true;
+                        break;
+                    case 3:
+                        result = num1 * num2;
+                        if (Double.toString(result).length() > 7)
+                            editTextNumDisplay.setText("ERROR");
+                        else {
+                            editTextNumDisplay.setText(Double.toString(result));
+                            opLast = true;
+                        }
+                        break;
+                    case 4:
+                        result = num1 / num2;
+                        editTextNumDisplay.setText(Double.toString(result));
+                        opLast = true;
+                        break;
+                }
+
+                break;
+            }
+            //0 shouldn't be displayed if no other non-zero integer is already displayed
             case R.id.btn0:
-                editTextNumDisplay.setText(editTextNumDisplay.getText() + "0");
+                if(editTextNumDisplay.getText().length() > 0)
+                    editTextNumDisplay.setText(editTextNumDisplay.getText() + "0");
                 break;
             case R.id.btn1:
-                editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "1");
+                if(opLast) {
+                    editTextNumDisplay.setText("1");
+                    opLast = false;
+                }
+                else {
+                    editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "1");
+                }
                 break;
             case R.id.btn2:
-                editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "2");
+                if(opLast) {
+                    editTextNumDisplay.setText("2");
+                    opLast = false;
+                }
+                else {
+                    editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "2");
+                }
                 break;
             case R.id.btn3:
-                editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "3");
+                if(opLast) {
+                    editTextNumDisplay.setText("3");
+                    opLast = false;
+                }
+                else {
+                    editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "3");
+                }
                 break;
             case R.id.btn4:
-                editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "4");
+                if(opLast) {
+                    editTextNumDisplay.setText("4");
+                    opLast = false;
+                }
+                else {
+                    editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "4");
+                }
                 break;
             case R.id.btn5:
-                editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "5");
+                if(opLast) {
+                    editTextNumDisplay.setText("5");
+                    opLast = false;
+                }
+                else {
+                    editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "5");
+                }
                 break;
             case R.id.btn6:
-                editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "6");
+                if(opLast) {
+                    editTextNumDisplay.setText("6");
+                    opLast = false;
+                }
+                else {
+                    editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "6");
+                }
                 break;
             case R.id.btn7:
-                editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "7");
+                if(opLast) {
+                    editTextNumDisplay.setText("7");
+                    opLast = false;
+                }
+                else {
+                    editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "7");
+                }
                 break;
             case R.id.btn8:
-                editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "8");
+                if(opLast) {
+                    editTextNumDisplay.setText("8");
+                    opLast = false;
+                }
+                else{
+                    editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "8");
+                }
                 break;
             case R.id.btn9:
-                editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "9");
+                if(opLast) {
+                    editTextNumDisplay.setText("9");
+                    opLast = false;
+                }
+                else{
+                    editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "9");
+                }
                 break;
         }
-
     }
 }
