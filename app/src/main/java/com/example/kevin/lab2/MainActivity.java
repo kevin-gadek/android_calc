@@ -8,10 +8,9 @@ import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button btnClear, btnAdd, btnSubtract, btnMultiply, btnDivide, btn0, btn1, btn2, btn3, btn4,
-                   btn5, btn6, btn7, btn8, btn9;
+                   btn5, btn6, btn7, btn8, btn9, btnEquals;
     private EditText editTextNumDisplay;
-    private double num1, num2, result;
-    private int opcode;
+    private int num1, num2, result, opcode;
     private boolean opLast = false;
 
     @Override
@@ -28,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSubtract = (Button) findViewById(R.id.btnSubtract);
         btnMultiply = (Button) findViewById(R.id.btnMultiply);
         btnDivide = (Button) findViewById(R.id.btnDivide);
+        btnEquals = (Button) findViewById(R.id.btnEquals);
 
         //operands defined
         btn0 = (Button) findViewById(R.id.btn0);
@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSubtract.setOnClickListener(this);
         btnMultiply.setOnClickListener(this);
         btnDivide.setOnClickListener(this);
+        btnEquals.setOnClickListener(this);
         btn0.setOnClickListener(this);
         btn1.setOnClickListener(this);
         btn2.setOnClickListener(this);
@@ -72,55 +73,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 opLast = true;
                 break;
             case R.id.btnAdd:
-                num1 = Double.parseDouble(editTextNumDisplay.getText().toString());
+                num1 = Integer.parseInt(editTextNumDisplay.getText().toString());
                 opcode = 1; //add
                 opLast = true;
                 break;
             case R.id.btnSubtract:
-                num1 = Double.parseDouble(editTextNumDisplay.getText().toString());
+                num1 = Integer.parseInt(editTextNumDisplay.getText().toString());
                 opcode = 2; //subtract
                 opLast = true;
                 break;
             case R.id.btnMultiply:
-                num1 = Double.parseDouble(editTextNumDisplay.getText().toString());
+                num1 = Integer.parseInt(editTextNumDisplay.getText().toString());
                 opcode = 3; //multiply
                 opLast = true;
                 break;
             case R.id.btnDivide:
-                num1 = Double.parseDouble(editTextNumDisplay.getText().toString());
+                num1 = Integer.parseInt(editTextNumDisplay.getText().toString());
                 opcode = 4; //divide
                 opLast = true;
                 break;
-            case R.id.btnEquals: {
-                switch (opcode) {
-                    case 1:
-                        result = num1 + num2;
-                        editTextNumDisplay.setText(Double.toString(result));
-                        opLast = true;
-                        break;
-                    case 2:
-                        result = num1 - num2;
-                        editTextNumDisplay.setText(Double.toString(result));
-                        opLast = true;
-                        break;
-                    case 3:
-                        result = num1 * num2;
-                        if (Double.toString(result).length() > 7)
-                            editTextNumDisplay.setText("ERROR");
-                        else {
-                            editTextNumDisplay.setText(Double.toString(result));
-                            opLast = true;
-                        }
-                        break;
-                    case 4:
-                        result = num1 / num2;
-                        editTextNumDisplay.setText(Double.toString(result));
-                        opLast = true;
-                        break;
+            case R.id.btnEquals:
+                if(opcode == 1) {
+                    num2 = Integer.parseInt(editTextNumDisplay.getText().toString());
+                    result = num1 + num2;
+                    editTextNumDisplay.setText(Integer.toString(result));
+                    opLast = true;
+                }else if(opcode == 2) {
+                    num2 = Integer.parseInt(editTextNumDisplay.getText().toString());
+                    result = num1 - num2;
+                    editTextNumDisplay.setText(Integer.toString(result));
+                    opLast = true;
+                }else if(opcode == 3){
+                    num2 = Integer.parseInt(editTextNumDisplay.getText().toString());
+                    result = num1 * num2;
+                    editTextNumDisplay.setText(Integer.toString(result));
+                    opLast = true;
+                }else if(opcode == 4){
+                    num2 = Integer.parseInt(editTextNumDisplay.getText().toString());
+                    double divResult = (double) result;
+                    divResult = ((double) num1) / ((double) num2));
+                    editTextNumDisplay.setText(Integer.toString(result));
+                    opLast = true;
                 }
-
                 break;
-            }
+
             //0 shouldn't be displayed if no other non-zero integer is already displayed
             case R.id.btn0:
                 if(editTextNumDisplay.getText().length() > 0)
