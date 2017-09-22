@@ -100,11 +100,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(editTextNumDisplay.getText().toString().length() == 0){
                     editTextNumDisplay.setText("-");
                     opLast = false;
-                }else { //subtract operator
+                }else if(result != 0) { //subtract operator
+                    if(opcode == 1){
+                        result = result + Integer.parseInt(editTextNumDisplay.getText().toString());
+                        editTextNumDisplay.setText(Integer.toString(result));
+                    }else if(opcode == 2){
+                        result = result - Integer.parseInt(editTextNumDisplay.getText().toString());
+                        editTextNumDisplay.setText(Integer.toString(result));
+                    }else if(opcode == 3){
+                        result = result * Integer.parseInt(editTextNumDisplay.getText().toString());
+                        editTextNumDisplay.setText(Integer.toString(result));
+                    }else if(opcode == 4){
+                        divResult = ((double) result) / ((double) Integer.parseInt(editTextNumDisplay.getText().toString()));
+                        editTextNumDisplay.setText(Integer.toString((int)(Math.round(divResult))));
+                    }
+                }else{
                     result = Integer.parseInt(editTextNumDisplay.getText().toString());
-                    opcode = 2; //subtract
-                    opLast = true;
                 }
+                opcode = 2; //subtract
+                opLast = true;
                 break;
             case R.id.btnMultiply:
                 if(result != 0){
