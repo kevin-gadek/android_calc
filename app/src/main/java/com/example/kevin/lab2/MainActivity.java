@@ -78,9 +78,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 opLast = true;
                 break;
             case R.id.btnSubtract:
-                num1 = Integer.parseInt(editTextNumDisplay.getText().toString());
-                opcode = 2; //subtract
-                opLast = true;
+                //negative integer
+                if(editTextNumDisplay.getText().toString().length() == 0){
+                    editTextNumDisplay.setText("-");
+                    opLast = false;
+                }else { //subtract operator
+                    num1 = Integer.parseInt(editTextNumDisplay.getText().toString());
+                    opcode = 2; //subtract
+                    opLast = true;
+                }
                 break;
             case R.id.btnMultiply:
                 num1 = Integer.parseInt(editTextNumDisplay.getText().toString());
@@ -110,14 +116,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     opLast = true;
                 }else if(opcode == 4){
                     num2 = Integer.parseInt(editTextNumDisplay.getText().toString());
-                    double divResult = (double) result;
-                    divResult = ((double) num1) / ((double) num2));
-                    editTextNumDisplay.setText(Integer.toString(result));
+                    double divResult = ((double) num1) / ((double) num2);
+                    editTextNumDisplay.setText(Integer.toString((int)(Math.round(divResult))));
                     opLast = true;
                 }
                 break;
 
-            //0 shouldn't be displayed if no other non-zero integer is already displayed
+            //no leading zeros
             case R.id.btn0:
                 if(editTextNumDisplay.getText().length() > 0)
                     editTextNumDisplay.setText(editTextNumDisplay.getText() + "0");

@@ -48,8 +48,8 @@
         <Button
             android:id="@+id/btnDivide"
             android:layout_gravity="fill"
-            android:text="\"
-            android:background="@drawable/buttonselector"></Button>
+            android:background="@drawable/buttonselector"
+            android:text="/"></Button>
 
         <Button
             android:id="@+id/btn4"
