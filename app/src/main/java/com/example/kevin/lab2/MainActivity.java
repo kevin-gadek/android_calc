@@ -10,7 +10,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btnClear, btnAdd, btnSubtract, btnMultiply, btnDivide, btn0, btn1, btn2, btn3, btn4,
                    btn5, btn6, btn7, btn8, btn9, btnEquals;
     private EditText editTextNumDisplay;
-    private int num1, num2, result, opcode;
+    private int result, opcode;
+    private double divResult;
     private boolean opLast = false;
 
     @Override
@@ -68,12 +69,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch(view.getId()){
             case R.id.btnClear:
                 editTextNumDisplay.setText("");
-                num1 = 0;
-                num2 = 0;
+                result = 0;
+                divResult = 0;
                 opLast = true;
                 break;
             case R.id.btnAdd:
-                num1 = Integer.parseInt(editTextNumDisplay.getText().toString());
+                if(result != 0){
+                    //num2 = Integer.parseInt(editTextNumDisplay.getText().toString());
+                    if(opcode == 1){
+                        result = result + Integer.parseInt(editTextNumDisplay.getText().toString());
+                        editTextNumDisplay.setText(Integer.toString(result));
+                    }else if(opcode == 2){
+                        result = result - Integer.parseInt(editTextNumDisplay.getText().toString());
+                        editTextNumDisplay.setText(Integer.toString(result));
+                    }else if(opcode == 3){
+                        result = result * Integer.parseInt(editTextNumDisplay.getText().toString());
+                        editTextNumDisplay.setText(Integer.toString(result));
+                    }else if(opcode == 4){
+                        divResult = ((double) result) / ((double) Integer.parseInt(editTextNumDisplay.getText().toString()));
+                        editTextNumDisplay.setText(Integer.toString((int)(Math.round(divResult))));
+                    }
+                }else{
+                    result = Integer.parseInt(editTextNumDisplay.getText().toString());
+                }
                 opcode = 1; //add
                 opLast = true;
                 break;
@@ -83,48 +101,78 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     editTextNumDisplay.setText("-");
                     opLast = false;
                 }else { //subtract operator
-                    num1 = Integer.parseInt(editTextNumDisplay.getText().toString());
+                    result = Integer.parseInt(editTextNumDisplay.getText().toString());
                     opcode = 2; //subtract
                     opLast = true;
                 }
                 break;
             case R.id.btnMultiply:
-                num1 = Integer.parseInt(editTextNumDisplay.getText().toString());
+                if(result != 0){
+                    if(opcode == 1){
+                        result = result + Integer.parseInt(editTextNumDisplay.getText().toString());
+                        editTextNumDisplay.setText(Integer.toString(result));
+                    }else if(opcode == 2){
+                        result = result - Integer.parseInt(editTextNumDisplay.getText().toString());
+                        editTextNumDisplay.setText(Integer.toString(result));
+                    }else if(opcode == 3){
+                        result = result * Integer.parseInt(editTextNumDisplay.getText().toString());
+                        editTextNumDisplay.setText(Integer.toString(result));
+                    }else if(opcode == 4){
+                        divResult = ((double) result) / ((double) Integer.parseInt(editTextNumDisplay.getText().toString()));
+                        editTextNumDisplay.setText(Integer.toString((int)(Math.round(divResult))));
+                    }
+                }else{
+                    result = Integer.parseInt(editTextNumDisplay.getText().toString());
+                }
                 opcode = 3; //multiply
                 opLast = true;
                 break;
             case R.id.btnDivide:
-                num1 = Integer.parseInt(editTextNumDisplay.getText().toString());
+                if(result != 0){
+                    if(opcode == 1){
+                        result = result + Integer.parseInt(editTextNumDisplay.getText().toString());
+                        editTextNumDisplay.setText(Integer.toString(result));
+                    }else if(opcode == 2){
+                        result = result - Integer.parseInt(editTextNumDisplay.getText().toString());
+                        editTextNumDisplay.setText(Integer.toString(result));
+                    }else if(opcode == 3){
+                        result = result * Integer.parseInt(editTextNumDisplay.getText().toString());
+                        editTextNumDisplay.setText(Integer.toString(result));
+                    }else if(opcode == 4){
+                        divResult = ((double) result) / ((double) Integer.parseInt(editTextNumDisplay.getText().toString()));
+                        editTextNumDisplay.setText(Integer.toString((int)(Math.round(divResult))));
+                    }
+                }else{
+                    result = Integer.parseInt(editTextNumDisplay.getText().toString());
+                }
+
                 opcode = 4; //divide
                 opLast = true;
                 break;
             case R.id.btnEquals:
                 if(opcode == 1) {
-                    num2 = Integer.parseInt(editTextNumDisplay.getText().toString());
-                    result = num1 + num2;
+                    result = result + Integer.parseInt(editTextNumDisplay.getText().toString());
                     editTextNumDisplay.setText(Integer.toString(result));
                     opLast = true;
                 }else if(opcode == 2) {
-                    num2 = Integer.parseInt(editTextNumDisplay.getText().toString());
-                    result = num1 - num2;
+                    result = result - Integer.parseInt(editTextNumDisplay.getText().toString());
                     editTextNumDisplay.setText(Integer.toString(result));
                     opLast = true;
                 }else if(opcode == 3){
-                    num2 = Integer.parseInt(editTextNumDisplay.getText().toString());
-                    result = num1 * num2;
+                    result = result * Integer.parseInt(editTextNumDisplay.getText().toString());
                     editTextNumDisplay.setText(Integer.toString(result));
                     opLast = true;
                 }else if(opcode == 4){
-                    num2 = Integer.parseInt(editTextNumDisplay.getText().toString());
-                    double divResult = ((double) num1) / ((double) num2);
-                    editTextNumDisplay.setText(Integer.toString((int)(Math.round(divResult))));
+                    divResult = ((double) result) / ((double) Integer.parseInt(editTextNumDisplay.getText().toString()));
+                    result = (int) (Math.round(divResult));
+                    editTextNumDisplay.setText(Integer.toString(result));
                     opLast = true;
                 }
                 break;
 
             //no leading zeros
             case R.id.btn0:
-                if(editTextNumDisplay.getText().length() > 0)
+                if(editTextNumDisplay.getText().length() > 0 && opLast == false)
                     editTextNumDisplay.setText(editTextNumDisplay.getText() + "0");
                 break;
             case R.id.btn1:
