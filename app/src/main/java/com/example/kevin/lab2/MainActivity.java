@@ -63,32 +63,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn9.setOnClickListener(this);
 
     }
+
+
 //max of 7 numbers on display
     @Override
     public void onClick(View view){
         switch(view.getId()){
             case R.id.btnClear:
-                editTextNumDisplay.setText("");
-                result = 0;
-                divResult = 0;
-                opLast = true;
+                clear();
                 break;
             case R.id.btnAdd:
                 if(result != 0){
-                    //num2 = Integer.parseInt(editTextNumDisplay.getText().toString());
-                    if(opcode == 1){
-                        result = result + Integer.parseInt(editTextNumDisplay.getText().toString());
-                        editTextNumDisplay.setText(Integer.toString(result));
-                    }else if(opcode == 2){
-                        result = result - Integer.parseInt(editTextNumDisplay.getText().toString());
-                        editTextNumDisplay.setText(Integer.toString(result));
-                    }else if(opcode == 3){
-                        result = result * Integer.parseInt(editTextNumDisplay.getText().toString());
-                        editTextNumDisplay.setText(Integer.toString(result));
-                    }else if(opcode == 4){
-                        divResult = ((double) result) / ((double) Integer.parseInt(editTextNumDisplay.getText().toString()));
-                        editTextNumDisplay.setText(Integer.toString((int)(Math.round(divResult))));
-                    }
+                    calculate();
                 }else{
                     result = Integer.parseInt(editTextNumDisplay.getText().toString());
                 }
@@ -164,112 +150,173 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 opLast = true;
                 break;
             case R.id.btnEquals:
-                if(opcode == 1) {
-                    result = result + Integer.parseInt(editTextNumDisplay.getText().toString());
-                    editTextNumDisplay.setText(Integer.toString(result));
-                    opLast = true;
-                }else if(opcode == 2) {
-                    result = result - Integer.parseInt(editTextNumDisplay.getText().toString());
-                    editTextNumDisplay.setText(Integer.toString(result));
-                    opLast = true;
-                }else if(opcode == 3){
-                    result = result * Integer.parseInt(editTextNumDisplay.getText().toString());
-                    editTextNumDisplay.setText(Integer.toString(result));
-                    opLast = true;
-                }else if(opcode == 4){
-                    divResult = ((double) result) / ((double) Integer.parseInt(editTextNumDisplay.getText().toString()));
-                    result = (int) (Math.round(divResult));
-                    editTextNumDisplay.setText(Integer.toString(result));
-                    opLast = true;
-                }
+                calculate();
                 break;
 
             //no leading zeros
             case R.id.btn0:
-                if(editTextNumDisplay.getText().length() > 0 && opLast == false)
+                if(editTextNumDisplay.getText().length() > 0 && Integer.parseInt(editTextNumDisplay.getText().toString()) != 0 && opLast == false)
                     editTextNumDisplay.setText(editTextNumDisplay.getText() + "0");
+                else{
+                    editTextNumDisplay.setText("0");
+                }
                 break;
             case R.id.btn1:
-                if(opLast) {
-                    editTextNumDisplay.setText("1");
-                    opLast = false;
+                if(editTextNumDisplay.getText().length() == 7){
+                    editTextNumDisplay.setText("Error: More than 7 integers not allowed");
+                }else{
+                    if(opLast) {
+                        editTextNumDisplay.setText("1");
+                        opLast = false;
+                    }
+                    else {
+                        editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "1");
+                    }
+
                 }
-                else {
-                    editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "1");
-                }
+
                 break;
             case R.id.btn2:
-                if(opLast) {
-                    editTextNumDisplay.setText("2");
-                    opLast = false;
-                }
-                else {
-                    editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "2");
+                if(editTextNumDisplay.getText().length() == 7){
+                    editTextNumDisplay.setText("Error: More than 7 integers not allowed");
+                }else{
+                    if(opLast) {
+                        editTextNumDisplay.setText("2");
+                        opLast = false;
+                    }
+                    else {
+                        editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "2");
+                    }
+
                 }
                 break;
             case R.id.btn3:
-                if(opLast) {
-                    editTextNumDisplay.setText("3");
-                    opLast = false;
-                }
-                else {
-                    editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "3");
+                if(editTextNumDisplay.getText().length() == 7){
+                    editTextNumDisplay.setText("Error: More than 7 integers not allowed");
+                }else{
+                    if(opLast) {
+                        editTextNumDisplay.setText("3");
+                        opLast = false;
+                    }
+                    else {
+                        editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "3");
+                    }
+
                 }
                 break;
             case R.id.btn4:
-                if(opLast) {
-                    editTextNumDisplay.setText("4");
-                    opLast = false;
-                }
-                else {
-                    editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "4");
+                if(editTextNumDisplay.getText().length() == 7){
+                    editTextNumDisplay.setText("Error: More than 7 integers not allowed");
+                }else{
+                    if(opLast) {
+                        editTextNumDisplay.setText("4");
+                        opLast = false;
+                    }
+                    else {
+                        editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "4");
+                    }
+
                 }
                 break;
             case R.id.btn5:
-                if(opLast) {
-                    editTextNumDisplay.setText("5");
-                    opLast = false;
-                }
-                else {
-                    editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "5");
+                if(editTextNumDisplay.getText().length() == 7){
+                    editTextNumDisplay.setText("Error: More than 7 integers not allowed");
+                }else{
+                    if(opLast) {
+                        editTextNumDisplay.setText("5");
+                        opLast = false;
+                    }
+                    else {
+                        editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "5");
+                    }
+
                 }
                 break;
             case R.id.btn6:
-                if(opLast) {
-                    editTextNumDisplay.setText("6");
-                    opLast = false;
-                }
-                else {
-                    editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "6");
+                if(editTextNumDisplay.getText().length() == 7){
+                    editTextNumDisplay.setText("Error: More than 7 integers not allowed");
+                }else{
+                    if(opLast) {
+                        editTextNumDisplay.setText("6");
+                        opLast = false;
+                    }
+                    else {
+                        editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "6");
+                    }
+
                 }
                 break;
             case R.id.btn7:
-                if(opLast) {
-                    editTextNumDisplay.setText("7");
-                    opLast = false;
-                }
-                else {
-                    editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "7");
+                if(editTextNumDisplay.getText().length() == 7){
+                    editTextNumDisplay.setText("Error: More than 7 integers not allowed");
+                }else{
+                    if(opLast) {
+                        editTextNumDisplay.setText("7");
+                        opLast = false;
+                    }
+                    else {
+                        editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "7");
+                    }
+
                 }
                 break;
             case R.id.btn8:
-                if(opLast) {
-                    editTextNumDisplay.setText("8");
-                    opLast = false;
-                }
-                else{
-                    editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "8");
+                if(editTextNumDisplay.getText().length() == 7){
+                    editTextNumDisplay.setText("Error: More than 7 integers not allowed");
+                }else{
+                    if(opLast) {
+                        editTextNumDisplay.setText("8");
+                        opLast = false;
+                    }
+                    else {
+                        editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "8");
+                    }
+
                 }
                 break;
             case R.id.btn9:
-                if(opLast) {
-                    editTextNumDisplay.setText("9");
-                    opLast = false;
-                }
-                else{
-                    editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "9");
+                if(editTextNumDisplay.getText().length() == 7){
+                    editTextNumDisplay.setText("Error: More than 7 integers not allowed");
+                }else{
+                    if(opLast) {
+                        editTextNumDisplay.setText("9");
+                        opLast = false;
+                    }
+                    else {
+                        editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + "9");
+                    }
+
                 }
                 break;
         }
     }
+
+    private void clear(){
+        editTextNumDisplay.setText("");
+        result = 0;
+        divResult = 0;
+        opLast = true;
+    }
+
+    private void calculate(){
+        if(opcode == 1){
+            result = result + Integer.parseInt(editTextNumDisplay.getText().toString());
+            editTextNumDisplay.setText(Integer.toString(result));
+        }else if(opcode == 2){
+            result = result - Integer.parseInt(editTextNumDisplay.getText().toString());
+            editTextNumDisplay.setText(Integer.toString(result));
+        }else if(opcode == 3){
+            result = result * Integer.parseInt(editTextNumDisplay.getText().toString());
+            editTextNumDisplay.setText(Integer.toString(result));
+        }else if(opcode == 4){
+            if(Integer.parseInt(editTextNumDisplay.getText().toString()) == 0){
+                editTextNumDisplay.setText("Error, divide by zero");
+            }else {
+                divResult = ((double) result) / ((double) Integer.parseInt(editTextNumDisplay.getText().toString()));
+                editTextNumDisplay.setText(Integer.toString((int) (Math.round(divResult))));
+            }
+        }
+    }
+
+
 }
