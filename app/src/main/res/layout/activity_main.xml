@@ -13,8 +13,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:verticalSpacing = "20dp"
-        android:horizontalSpacing = "20dp"
+        android:verticalSpacing = "1dp"
+        android:horizontalSpacing = "1dp"
         android:columnCount="4"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
@@ -26,11 +26,9 @@
         <Button
             android:id="@+id/btnClear"
             android:layout_column="3"
-            android:text="C"
             android:layout_gravity="fill"
-            android:background="@drawable/buttonselector"
-            android:layout_width="wrap_content"
-            android:layout_height="37dp"></Button>
+            android:text="C"
+            android:background="@drawable/buttonselector"></Button>
 
         <Button
             android:id="@+id/btn7"
@@ -40,9 +38,7 @@
         <Button
             android:id="@+id/btn8"
             android:text="8"
-            android:background="@drawable/buttonselector"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></Button>
+            android:background="@drawable/buttonselector"></Button>
 
         <Button
             android:id="@+id/btn9"
@@ -72,8 +68,8 @@
 
         <Button
             android:id="@+id/btnMultiply"
-            android:text="*"
             android:layout_gravity="fill"
+            android:text="*"
             android:background="@drawable/buttonselector"></Button>
 
         <Button
@@ -88,13 +84,14 @@
 
         <Button
             android:id="@+id/btn3"
+            android:layout_gravity="fill"
             android:text="3"
             android:background="@drawable/buttonselector"></Button>
 
         <Button
             android:id="@+id/btnSubtract"
-            android:text="-"
             android:layout_gravity="fill"
+            android:text="-"
             android:background="@drawable/buttonselector"></Button>
 
         <Button
@@ -120,8 +117,8 @@
 
     <EditText
         android:id="@+id/editTextNumDisplay"
-        android:layout_width="299dp"
-        android:layout_height="129dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -131,10 +128,10 @@
         android:textAlignment="textEnd"
         android:gravity="end"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.566"
+        app:layout_constraintHorizontal_bias="0.568"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.262" />
+        app:layout_constraintVertical_bias="0.263" />
 
 </android.support.constraint.ConstraintLayout>
