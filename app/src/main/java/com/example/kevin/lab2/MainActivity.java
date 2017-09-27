@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         init();
     }
 
-    private void init(){
+    private void init() {
         //operator/function buttons defined
         btnClear = (Button) findViewById(R.id.btnClear);
         btnAdd = (Button) findViewById(R.id.btnAdd);
@@ -67,26 +67,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-
-
-    //max of 7 numbers on display
     @Override
-    public void onClick(View view){
-        switch(view.getId()){
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.btnClear:
                 clear();
                 break;
             case R.id.btnAdd:
-               calc();
+                calc();
                 opcode = 1;
                 opLast = true;
                 break;
             case R.id.btnSubtract:
                 //negative integer
-                if(editTextNumDisplay.getText().toString().length() == 0){
+                if (editTextNumDisplay.getText().toString().length() == 0 || firstZeroFlag == true) {
                     editTextNumDisplay.setText("-");
                     negFlag = true;
                     opLast = false;
+                    firstZeroFlag = false;
                     return;
                 }
                 calc();
@@ -99,26 +97,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 opLast = true;
                 break;
             case R.id.btnDivide:
-               calc();
+                calc();
                 opcode = 4;
                 opLast = true;
                 break;
             case R.id.btnEquals:
-                if(opcode == 1) {
+                if (opcode == 1) {
                     result += Integer.parseInt(editTextNumDisplay.getText().toString());
                     editTextNumDisplay.setText(Integer.toString(result));
                     opLast = true;
-                }else if(opcode == 2) {
+                } else if (opcode == 2) {
                     result -= Integer.parseInt(editTextNumDisplay.getText().toString());
                     editTextNumDisplay.setText(Integer.toString(result));
                     opLast = true;
-                }else if(opcode == 3){
+                } else if (opcode == 3) {
                     result *= Integer.parseInt(editTextNumDisplay.getText().toString());
                     editTextNumDisplay.setText(Integer.toString(result));
                     opLast = true;
-                }else if(opcode == 4){
-                    divResult = ((double) result) / ((double) Integer.parseInt(editTextNumDisplay.getText().toString()));
-                    result = (int) (Math.round(divResult));
+                } else if (opcode == 4) {
+                    //divResult = ((double) result) / ((double) Integer.parseInt(editTextNumDisplay.getText().toString()));
+                    result /= Integer.parseInt(editTextNumDisplay.getText().toString());
                     editTextNumDisplay.setText(Integer.toString(result));
                     opLast = true;
                 }
@@ -126,16 +124,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             //no leading zeros
             case R.id.btn0:
-                if(editTextNumDisplay.getText().toString().length() == 7){
+                if (editTextNumDisplay.getText().toString().length() == 7) {
                     editTextNumDisplay.setText("Error: More than 7 chars");
                     errFlag = true;
-                }else{
+                } else {
                     //if length of num on display is 0, meaning initial startup or an operator has just been pressed
-                    if(editTextNumDisplay.getText().length() == 0 || opLast){
+                    if (editTextNumDisplay.getText().length() == 0 || opLast) {
                         editTextNumDisplay.setText("0");
                         firstZeroFlag = true;
                         opLast = false;
-                    }else if(editTextNumDisplay.getText().length() > 0 && Integer.parseInt(editTextNumDisplay.getText().toString()) != 0 && opLast == false){
+                    } else if (editTextNumDisplay.getText().length() > 0 && Integer.parseInt(editTextNumDisplay.getText().toString()) != 0 && opLast == false) {
                         editTextNumDisplay.setText(editTextNumDisplay.getText() + "0");
                         firstZeroFlag = false;
                     }
@@ -149,30 +147,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 operandPress(2);
                 break;
             case R.id.btn3:
-               operandPress(3);
+                operandPress(3);
                 break;
             case R.id.btn4:
-               operandPress(4);
+                operandPress(4);
                 break;
             case R.id.btn5:
-               operandPress(5);
+                operandPress(5);
                 break;
             case R.id.btn6:
-               operandPress(6);
+                operandPress(6);
                 break;
             case R.id.btn7:
-               operandPress(7);
+                operandPress(7);
                 break;
             case R.id.btn8:
                 operandPress(8);
                 break;
             case R.id.btn9:
-               operandPress(9);
+                operandPress(9);
                 break;
         }
     }
 
-    public void clear(){
+    public void clear() {
         editTextNumDisplay.setText("");
         result = 0;
         divResult = 0;
@@ -180,69 +178,69 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         errFlag = false;
     }
 
-    public void operandPress(int operand){
-        if(errFlag){
+    public void operandPress(int operand) {
+        if (errFlag) {
             clear();
             editTextNumDisplay.setText(Integer.toString(operand));
             opLast = false;
-        }
-        else if(editTextNumDisplay.getText().toString().length() == 7){
+        } else if (editTextNumDisplay.getText().toString().length() == 7) {
             editTextNumDisplay.setText("Error: More than 7 chars");
             errFlag = true;
-        }else if (opLast){
+        } else if (opLast) {
             editTextNumDisplay.setText(Integer.toString(operand));
             opLast = false;
-        } else if(firstZeroFlag){
+        } else if (firstZeroFlag) {
             editTextNumDisplay.setText(Integer.toString(operand));
             firstZeroFlag = false;
             opLast = false;
-        }else{
+        } else {
             editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + Integer.toString(operand));
         }
         negFlag = false;
     }
-}
 
-public void calc(){
-    //if this is first operation in sequence
-    if(result == 0 && negFlag == false){
-        result = Integer.parseInt(editTextNumDisplay.getText().toString());
-    }else if(negFlag){ //need to delete that negative sign then
-        editTextNumDisplay.setText("");
-        negFlag = false;
-    }else{ //support for multiple operator sequences like 1 + 2 + 3 + 4
-        //prev operator was add
-        if(opcode == 1){
-            result += Integer.parseInt(editTextNumDisplay.getText().toString());
-            //overflow check
-            if(Integer.toString(result).length() > 7){
-                editTextNumDisplay.setText("Err: Overflow");
-                errFlag = true;
-            }else{
-                editTextNumDisplay.setText(Integer.toString(result));
-            }
-            editTextNumDisplay.setText(Integer.toString(result));
-        } else if(opcode == 2){ // subtract
-            result -= Integer.parseInt(editTextNumDisplay.getText().toString());
-            //check if overflow
-            if(Integer.toString(result).length() > 7){
-                editTextNumDisplay.setText("Err: Overflow");
-                errFlag = true;
-            }else{
-                editTextNumDisplay.setText(Integer.toString(result));
-            }
 
-        }else if(opcode == 3){ //multiply
-            result *= Integer.parseInt(editTextNumDisplay.getText().toString());
-            if(Integer.toString(result).length() > 7) {
-                editTextNumDisplay.setText("Err: Overflow");
-                errFlag = true;
-            }else {
+    public void calc() {
+        //if this is first operation in sequence
+        if (result == 0 && negFlag == false) {
+            result = Integer.parseInt(editTextNumDisplay.getText().toString());
+        } else if (negFlag) { //need to delete that negative sign then
+            editTextNumDisplay.setText("");
+            negFlag = false;
+        } else { //support for multiple operator sequences like 1 + 2 + 3 + 4
+            //prev operator was add
+            if (opcode == 1) {
+                result += Integer.parseInt(editTextNumDisplay.getText().toString());
+                //overflow check
+                if (Integer.toString(result).length() > 7) {
+                    editTextNumDisplay.setText("Err: Overflow");
+                    errFlag = true;
+                } else {
+                    editTextNumDisplay.setText(Integer.toString(result));
+                }
+                editTextNumDisplay.setText(Integer.toString(result));
+            } else if (opcode == 2) { // subtract
+                result -= Integer.parseInt(editTextNumDisplay.getText().toString());
+                //check if overflow
+                if (Integer.toString(result).length() > 7) {
+                    editTextNumDisplay.setText("Err: Overflow");
+                    errFlag = true;
+                } else {
+                    editTextNumDisplay.setText(Integer.toString(result));
+                }
+
+            } else if (opcode == 3) { //multiply
+                result *= Integer.parseInt(editTextNumDisplay.getText().toString());
+                if (Integer.toString(result).length() > 7) {
+                    editTextNumDisplay.setText("Err: Overflow");
+                    errFlag = true;
+                } else {
+                    editTextNumDisplay.setText(Integer.toString(result));
+                }
+            } else if (opcode == 4) { //divide
+                result /= Integer.parseInt(editTextNumDisplay.getText().toString());
                 editTextNumDisplay.setText(Integer.toString(result));
             }
-        }else if(opcode == 4){ //divide
-            result /= Integer.parseInt(editTextNumDisplay.getText().toString());
-            editTextNumDisplay.setText(Integer.toString(result));
         }
     }
 }
