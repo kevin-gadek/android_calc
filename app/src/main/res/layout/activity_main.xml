@@ -265,8 +265,8 @@
 
     <EditText
         android:id="@+id/editTextNumDisplay"
-        android:layout_width="227dp"
-        android:layout_height="55dp"
+        android:layout_width="256dp"
+        android:layout_height="84dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -275,12 +275,14 @@
         android:gravity="end"
         android:inputType="numberSigned"
         android:textAlignment="textEnd"
-        android:textSize="30sp"
+        android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.386" />
+        app:layout_constraintVertical_bias="0.385"
+        tools:layout_editor_absoluteX="38dp"
+        tools:layout_editor_absoluteY="170dp" />
 
 </android.support.constraint.ConstraintLayout>

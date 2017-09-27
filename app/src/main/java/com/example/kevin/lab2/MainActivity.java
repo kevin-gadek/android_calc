@@ -74,6 +74,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 clear();
                 break;
             case R.id.btnAdd:
+                if(errFlag){
+                    editTextNumDisplay.setText("Press CLR");
+                    return;
+                }else if(opLast){
+                    opcode = 1;
+                    return;
+                }
                 calc();
                 opcode = 1;
                 opLast = true;
@@ -85,6 +92,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     negFlag = true;
                     opLast = false;
                     firstZeroFlag = false;
+                    errFlag = false;
+                    return;
+                }else if(opLast){
+                    opcode = 2;
                     return;
                 }
                 calc();
@@ -92,11 +103,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 opLast = true;
                 break;
             case R.id.btnMultiply:
+                if(errFlag){
+                    editTextNumDisplay.setText("Press CLR");
+                    return;
+                }else if(opLast){
+                    opcode = 3;
+                    return;
+                }
                 calc();
                 opcode = 3;
                 opLast = true;
                 break;
             case R.id.btnDivide:
+                if(errFlag){
+                    editTextNumDisplay.setText("Press CLR");
+                    return;
+                }else if(opLast){
+                    opcode = 4;
+                    return;
+                }
                 calc();
                 opcode = 4;
                 opLast = true;
@@ -106,19 +131,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     result += Integer.parseInt(editTextNumDisplay.getText().toString());
                     editTextNumDisplay.setText(Integer.toString(result));
                     opLast = true;
+                    opcode = 0;
                 } else if (opcode == 2) {
                     result -= Integer.parseInt(editTextNumDisplay.getText().toString());
                     editTextNumDisplay.setText(Integer.toString(result));
                     opLast = true;
+                    opcode = 0;
                 } else if (opcode == 3) {
                     result *= Integer.parseInt(editTextNumDisplay.getText().toString());
                     editTextNumDisplay.setText(Integer.toString(result));
                     opLast = true;
+                    opcode = 0;
                 } else if (opcode == 4) {
-                    //divResult = ((double) result) / ((double) Integer.parseInt(editTextNumDisplay.getText().toString()));
-                    result /= Integer.parseInt(editTextNumDisplay.getText().toString());
+                    if(Integer.parseInt(editTextNumDisplay.getText().toString()) == 0){
+                        editTextNumDisplay.setText("Error");
+                        errFlag = true;
+                        return;
+                    }
+                    //should round up
+                    result = (int) Math.ceil((double)result / Double.parseDouble(editTextNumDisplay.getText().toString()));
                     editTextNumDisplay.setText(Integer.toString(result));
                     opLast = true;
+                    opcode = 0;
                 }
                 break;
 
@@ -207,7 +241,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (negFlag) { //need to delete that negative sign then
             editTextNumDisplay.setText("");
             negFlag = false;
-        } else { //support for multiple operator sequences like 1 + 2 + 3 + 4
+        }else { //support for multiple operator sequences like 1 + 2 + 3 + 4
             //prev operator was add
             if (opcode == 1) {
                 result += Integer.parseInt(editTextNumDisplay.getText().toString());
@@ -238,7 +272,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     editTextNumDisplay.setText(Integer.toString(result));
                 }
             } else if (opcode == 4) { //divide
-                result /= Integer.parseInt(editTextNumDisplay.getText().toString());
+                //should round up
+                result = (int) Math.ceil((double)result / Double.parseDouble(editTextNumDisplay.getText().toString()));
                 editTextNumDisplay.setText(Integer.toString(result));
             }
         }
