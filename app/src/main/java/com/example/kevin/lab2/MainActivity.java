@@ -11,11 +11,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             btn5, btn6, btn7, btn8, btn9, btnEquals;
     private EditText editTextNumDisplay;
     private int result, opcode;
-    private double divResult;
-    private boolean opLast = false;
-    private boolean errFlag = false;
-    private boolean firstZeroFlag = false;
-    private boolean negFlag = false;
+    private boolean opLast = false; //flag for when operator is input
+    private boolean errFlag = false; //flag for result overflow or too many digits in operand
+    private boolean firstZeroFlag = false; //flag to get rid of leading zeros
+    private boolean negFlag = false; //flag for negative operands
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //display screen
         editTextNumDisplay = (EditText) findViewById(R.id.editTextNumDisplay);
 
+        //init all event listeners
         btnClear.setOnClickListener(this);
         btnAdd.setOnClickListener(this);
         btnSubtract.setOnClickListener(this);
@@ -86,6 +86,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 opLast = true;
                 break;
             case R.id.btnSubtract:
+                if(errFlag){
+                    editTextNumDisplay.setText("Press CLR");
+                    return;
+                }
                 //negative integer
                 if (editTextNumDisplay.getText().toString().length() == 0 || firstZeroFlag == true) {
                     editTextNumDisplay.setText("-");
@@ -144,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     opcode = 0;
                 } else if (opcode == 4) {
                     if(Integer.parseInt(editTextNumDisplay.getText().toString()) == 0){
-                        editTextNumDisplay.setText("Error");
+                        editTextNumDisplay.setText("Err");
                         errFlag = true;
                         return;
                     }
@@ -159,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //no leading zeros
             case R.id.btn0:
                 if (editTextNumDisplay.getText().toString().length() == 7) {
-                    editTextNumDisplay.setText("Error: More than 7 chars");
+                    editTextNumDisplay.setText("Err");
                     errFlag = true;
                 } else {
                     //if length of num on display is 0, meaning initial startup or an operator has just been pressed
@@ -207,7 +211,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void clear() {
         editTextNumDisplay.setText("");
         result = 0;
-        divResult = 0;
         opLast = true;
         errFlag = false;
     }
@@ -217,18 +220,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             clear();
             editTextNumDisplay.setText(Integer.toString(operand));
             opLast = false;
-        } else if (editTextNumDisplay.getText().toString().length() == 7) {
-            editTextNumDisplay.setText("Error: More than 7 chars");
+        } else if (editTextNumDisplay.getText().toString().length() == 7 && opLast == false) { //too many digits
+            editTextNumDisplay.setText("Err");
             errFlag = true;
-        } else if (opLast) {
+        } else if (opLast) { //when new operand is being input
             editTextNumDisplay.setText(Integer.toString(operand));
             opLast = false;
-        } else if (firstZeroFlag) {
+        } else if (firstZeroFlag) { //for case of user input such as "04", sets operand to just 4
             editTextNumDisplay.setText(Integer.toString(operand));
             firstZeroFlag = false;
             opLast = false;
         } else {
-            editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + Integer.toString(operand));
+            editTextNumDisplay.setText(editTextNumDisplay.getText().toString() + Integer.toString(operand)); //add input to end of operand
         }
         negFlag = false;
     }
